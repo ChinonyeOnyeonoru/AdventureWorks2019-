@@ -117,16 +117,16 @@ A. SELECT he.JobTitle, AVG(SickLeaveHours) AS SickLeave_Hrs
 	order by Avg_Sick_Leave	DESC;
  
 
-|JobTitle                |SickLeave_Hrs|
-|----------------------------|--------------|
-|Chief Executive Officer     |69            |
-|Stocker                     |68            |
-|Shipping and Receiving Clerk|67            |
-|Maintenance Supervisor      |66            |
-|Shipping and Receiving Supervisor|       66|
-Production Technician - WC10|	65
-Janitor|	64|
-Facilities Administrative Assistant|	63|
+|JobTitle                         |SickLeave_Hrs |
+|----------------------------     |--------------|
+|Chief Executive Officer          |69            |
+|Stocker                          |68            |
+|Shipping and Receiving Clerk     |67            |
+|Maintenance Supervisor           |66            |
+|Shipping and Receiving Supervisor|66            |
+Production Technician - WC10      |65            |
+Janitor                           |64            |
+Facilities Administrative Assistant|63       |
 Facilities Manager|	63|
 Quality Assurance Technician|	61|
 Quality Assurance Supervisor|	60|
@@ -191,49 +191,108 @@ Vice President of Engineering|	20|
 5. What is the relationship between store trading duration and revenue
 
 SELECT YearOpened, ROUND((AVG(AnnualRevenue)/1000),2) AS Average_Revenue, COUNT(Name) AS Num_of_Stores
+
 	FROM Sales.vStorewithDemographics
+ 
 	GROUP BY YearOpened;
 	
 
 |YearOpened|Average_Revenue|Num_of_Stores|
 |----------|---------------|-------------|
-|1970	|5.79|	19|
-|1971	|115.79	|19|
-|1972	|171.58	|19|
-|1973|	30.00	|6|
-|1974	|222.00	|25|
-|1975|	120.80|	25|
-|1976	|70.80|	25|
-1977	|225.00|	12|
-|1978	|137.60|	25|
-|1979|	199.20|	25|
-|1980|	222.00|	25|
-|1981	|165.00	|12|
-|1982|	70.80|	25|
-|1983|	|197.37	|19|
-|1984|	137.60	|25|
-|1985|	115.00|	12|
-|1986|	222.00|	25|
-|1987	|178.46	|26
-|1988	|106.25	|32|
-|1989	|219.23	|13|
-|1990|	|143.85|	26|
-|1991|	178.00|	20|
-|1992	|222.22|	27|
-|1993|	190.00	|14|
+|1970	|5.79              |19	 	 |
+|1971	|115.79	           |19		 |
+|1972	|171.58	           |19		 |
+|1973   |30.00		   |6		 |
+|1974	|222.00	           |25 		 |
+|1975|	120.80             |25		 |
+|1976	|70.80		   |25	 	 |
+1977	|225.00	 	   |12	 	 |
+|1978	|137.60		   |25		 |
+|1979	|199.20	 	   |25	 	 |
+|1980	|222.00		   |25		 |
+|1981	|165.00		   |12		 |
+|1982	|	70.80	   |	25	 |
+|1983	|	197.37	   |19	 	 |
+|1984	|	137.60	   |25		 |
+|1985 	|	115.00	   |	12	 |
+|1986	|	222.00	   |	25	 |
+|1987	|178.46		   |26		 |
+|1988	|106.25		   |32		 |
+|1989	|219.23		   |13		 |
+|1990	|	143.85	   |26		 |
+|1991	|	178.00	   |	20	 |
+|1992	|222.22		   |27		 |
+|1993	|	190.00	|14|
 |1994	|98.15	|27|
-|1995|	200.00	|21|
+|1995	|	200.00	|21|
 |1996	|157.78	|27|
-|1997|	104.50	||20|
-|1998|	231.82	|33|
-|1999|	253.33|	33|
+|1997	|	104.50	||20|
+|1998	|	231.82	|33|
+|1999	|	253.33|	33|
 |2000	|90.00|	26|
-|2001|	100.00	|13|
+|2001	|	100.00	|13|
+
 
 
 
 6. What is the relationship between the size of the stores, number of employees and revenue
-7. 
+
+
+/* 6.What is the relationship between the size of the stores, number of employees and revenue?*/
+
+		CREATE VIEW answer6 AS
+	SELECT  SquareFeet AS Size, AVG(AnnualRevenue) AS Average_Revenue, AVG(NumberEmployees) AS Avg_num_employees
+ 
+	FROM Sales.vStorewithDemographics
+ 
+	GROUP BY SquareFeet
+
+Commands completed successfully.
+
+Completion time: 2024-12-15T23:08:23.6807694+00:00
+
+
+|Size	|Average_Revenue|Avg_num_employees|
+|-------|---------------|-----------------|
+|6000	|30000.00	|3|
+|7000	|30000.00	|5|
+|8000	|30000.00	|5|
+|9000	|30000.00	|5|
+|10000	|30000.00	|5|
+|11000	|30000.00	|7|
+|17000	|80000.00	|10|
+|18000	|80000.00	|13|
+|19000	|80000.00	|15|
+|20000	|80000.00	|14|
+|21000	|80000.00	|14|
+|22000	|80000.00	|15|
+|23000	|80000.00	|18|
+|24000	|100000.00	|24|
+|25000	|100000.00	|24|
+|26000	|100000.00	|24|
+|27000	|100000.00	|23|
+|28000	|100000.00	|27|
+|35000	|150000.00	|32|
+|36000	|150000.00	|35|
+|37000	|150000.00	|38|
+|38000	|150000.00	|41|
+|39000	|150000.00	|39|
+|40000	|150000.00	|44|
+|41000	|150000.00	|45|
+|42000	|150000.00	|48|
+|68000	|300000.00	|52|
+|69000	|300000.00	|57|
+|70000	|300000.00	|58|
+|71000	|300000.00	|62|
+|73000	|300000.00	|73|
+|74000	|300000.00	|76|
+|75000	|300000.00	|87|
+|77000	|300000.00	|89|
+|78000	|300000.00	|92|
+|79000	|300000.00	|94|
+|80000	|300000.00	|97|
+
+
 
 
 
