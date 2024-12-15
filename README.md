@@ -3,6 +3,7 @@ The AdventureWorks demo database
 
 ## Objectives ans Solutions 
 
+
 1. What is the regional sales in best performing country
 ### Query
 
@@ -25,6 +26,7 @@ order by (SalesYTD + SalesLastYear) desc
 |Southeast  |2538667.25 |3925071.43 |
 |Central    |	3072175.12|3205014.08 |
 |Northeast  |	2402176.85|3607148.94 |
+
 
    
 2. What is the relationship between annual leave taken and bonus
@@ -68,6 +70,7 @@ create view leave_bonus as
 |37|289|5150.00|
 |34|290|985.00|
 
+
 3. What is the relationship between Country and Revenue
 
 select CountryRegionName as country , round((sum(AnnualRevenue)/1000000),2)as Revenue
@@ -93,14 +96,142 @@ select CountryRegionName as country , round((sum(AnnualRevenue)/1000000),2)as Re
 
 4. What is the relationship between sick leave and Job Title (PersonType)
 
-select JobTitle, AVG(SickLeaveHours) as Avg_Sick_Leave,OrganizationLevel
+
+
+A. SELECT he.JobTitle, AVG(SickLeaveHours) AS SickLeave_Hrs
+
+	FROM [HumanResources].[Employee]AS he
+ 
+	INNER JOIN [HumanResources].[vEmployeeDepartment] AS hdv
+ 
+	ON he.JobTitle = hdv.JobTitle
+ 
+	GROUP BY he.JobTitle
+ 
+	ORDER BY  SickLeave_Hrs DESC;
+ 
+
+ B. select JobTitle, AVG(SickLeaveHours) as Avg_Sick_Leave
 	from [HumanResources].[Employee]
-	group by JobTitle,OrganizationLevel
+	group by JobTitle
+	order by Avg_Sick_Leave	DESC;
+ 
 
-
+|JobTitle                |SickLeave_Hrs|
+|----------------------------|--------------|
+|Chief Executive Officer     |69            |
+|Stocker                     |68            |
+|Shipping and Receiving Clerk|67            |
+|Maintenance Supervisor      |66            |
+|Shipping and Receiving Supervisor|       66|
+Production Technician - WC10|	65
+Janitor|	64|
+Facilities Administrative Assistant|	63|
+Facilities Manager|	63|
+Quality Assurance Technician|	61|
+Quality Assurance Supervisor|	60|
+Quality Assurance Manager|	60|
+Production Supervisor - WC60|	60|
+Production Technician - WC45|	59|
+Document Control Assistant|	59|
+Production Supervisor - WC50|	58|
+Document Control Manager|	58|
+Research and Development Manager|	57|
+Production Supervisor - WC45|	57|
+Control Specialist|	57|
+Application Specialist|	56|
+Production Supervisor - WC40|	55|
+Network Administrator	|54|
+Network Manager|	54|
+Production Supervisor - WC30|	54|
+Database Administrator|	53|
+Vice President of Production|	52|
+Production Supervisor - WC10	|52|
+Information Services Manager|	52|
+Accounts Payable Specialist|	51|
+Senior Tool Designer|	51|
+Research and Development Engineer|	51|
+Accounts Receivable Specialist|	50|
+Accountant	|49|
+Production Technician - WC40|	49|
+Accounts Manager|	48|
+Assistant to the Chief Financial Officer|	48|
+Finance Manager|	47|
+Buyer	|47|
+Human Resources Manager|	47|
+Human Resources Administrative Assistant|	46|
+Purchasing Assistant	|45|
+Benefits Specialist	|45|
+Purchasing Manager	|44|
+Recruiter	|44|
+Production Technician - WC50	|43|
+Scheduling Assistant	|43|
+Master Scheduler	|42|
+Marketing Specialist	|42|
+Production Control Manager	|41|
+Production Supervisor - WC20|	40|
+Marketing Manager	|40|
+Marketing Assistant	|40|
+Production Technician - WC30|	36|
+Sales Representative	|35|
+Production Technician - WC60|	33|
+European Sales Manager	|30|
+Pacific Sales Manager	|30|
+North American Sales Manager	|27|
+Production Technician - WC20|	25|
+Vice President of Sales|	25|
+Tool Designer	|24|
+Design Engineer|	22|
+Engineering Manager	|21|
+Senior Design Engineer	|21|
+Chief Financial Officer	|20|
+Vice President of Engineering|	20|
 
 
 5. What is the relationship between store trading duration and revenue
+
+SELECT YearOpened, ROUND((AVG(AnnualRevenue)/1000),2) AS Average_Revenue, COUNT(Name) AS Num_of_Stores
+	FROM Sales.vStorewithDemographics
+	GROUP BY YearOpened;
+	
+
+|YearOpened|Average_Revenue|Num_of_Stores|
+|----------|---------------|-------------|
+|1970	|5.79|	19|
+|1971	|115.79	|19|
+|1972	|171.58	|19|
+|1973|	30.00	|6|
+|1974	|222.00	|25|
+|1975|	120.80|	25|
+|1976	|70.80|	25|
+1977	|225.00|	12|
+|1978	|137.60|	25|
+|1979|	199.20|	25|
+|1980|	222.00|	25|
+|1981	|165.00	|12|
+|1982|	70.80|	25|
+|1983|	|197.37	|19|
+|1984|	137.60	|25|
+|1985|	115.00|	12|
+|1986|	222.00|	25|
+|1987	|178.46	|26
+|1988	|106.25	|32|
+|1989	|219.23	|13|
+|1990|	|143.85|	26|
+|1991|	178.00|	20|
+|1992	|222.22|	27|
+|1993|	190.00	|14|
+|1994	|98.15	|27|
+|1995|	200.00	|21|
+|1996	|157.78	|27|
+|1997|	104.50	||20|
+|1998|	231.82	|33|
+|1999|	253.33|	33|
+|2000	|90.00|	26|
+|2001|	100.00	|13|
+
+
+
 6. What is the relationship between the size of the stores, number of employees and revenue
 7. 
 
@@ -192,7 +323,7 @@ Schema: person:
 - customer
 - countryregioncurrency
 - currencyrate
- -  reditcard
+- reditcard
 - specialoffer
 - specialofferproduct
 - currency
